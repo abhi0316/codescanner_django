@@ -1,0 +1,45 @@
+<doctype html>
+<html(lang="en")>
+<head>
+<title> NEST</title>      
+{% load static %}
+<script src="{% static "jquery-2.1.1.min.js" %}" type="text/javascr$
+<script>
+$(document).ready(function(){
+setInterval(function(){
+$("body").load('index.html')
+},3000);
+});
+</script>
+<style type='text/css'>
+.center-field 
+{ 
+background-color: rgb(20, 40, 52); 
+border-style: solid; 
+border-color:white;
+border-radius: 15px; 
+position: absolute; 
+margin-top: 5%; 
+margin-left: 10vw; 
+width: 80vw; 
+height: 200px;
+color:white; 
+text-align:center; 
+}
+a 
+{ 
+float:right;
+}
+</style>
+<body>
+<div class="center-field">
+<br>
+<b style="color:white">{{ status }}</b><br>
+<button type="submit" formaction="/stop/">STOP</button>
+
+
+</div>
+</body>    
+
+
+

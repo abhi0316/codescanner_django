@@ -1,0 +1,128 @@
+doctype html
+html(lang="en")
+ head
+  title= NEST  
+  script(type='text/javascript').
+   function validateInput() {
+   document.getElementById("Mysubmit").disabled = true;
+   } 
+   var fvalue;
+   var val;
+   var index;
+   var data;
+   var openFile= function(event) {
+   var input = event.target;
+   var reader = new FileReader();
+   reader.onload = function(){
+   var text = reader.result;
+   var text=reader.result.substring(0, 200).split('\n');
+   console.log(text)
+   document.getElementById("name").value=text[0];
+   document.getElementById("pcbpn").value=text[1];
+   document.getElementById("fdata").value=text[2];
+   //document.getElementById("data").value=text[3];
+   //document.getElementById("prefix").value=text[4];
+   //document.getElementById("datalen").value=text[5];
+   };
+   reader.readAsText(input.files[0]);
+   };
+
+   var openError= function(event) {
+   var input = event.target;
+   var reader = new FileReader();
+   reader.onload = function(){
+   var text = reader.result;
+   var text=reader.result.substring(0, 200).split('\n');
+   
+   var comp = document.getElementById("fdata").value;
+   if (text && comp) {
+   
+   if (text[0].length != comp.length) {
+   alert ("FORMAT ERROR CSV");
+   document.getElementById("error_file").value="";
+   }
+   }
+   else {
+   alert ("UPDATE ERROR AFTER CONFIGS");
+   document.getElementById("error_file").value="";
+   }
+   console.log(text)
+   };
+   reader.readAsText(input.files[0]);
+   };
+
+  
+   function popup() {
+   fvalue = document.getElementById("fdata").value;
+   document.getElementById("prefix").value = fvalue;
+  
+   }
+
+   function check() {
+   var prefix = document.getElementById("prefix").value;
+   index=fvalue.indexOf(prefix);
+   if (index != 0){
+   alert ("PREFIX NOT CORRECT ");
+   document.getElementById("prefix").value = fvalue;
+   }
+   }
+   function verify() {
+   var tmpval = document.getElementById("prefix").value;
+   var tmpdata = document.getElementById("data").value;
+   if (fvalue.indexOf(tmpval+tmpdata) == -1) {
+   alert("ERROR IN ENTERED VALUES PREFIX,DATA MISMATCH");
+   document.getElementById("prefix").value = fvalue;
+   document.getElementById("data").value="";
+   document.getElementById("datalen").value="";
+   document.getElementById("Mysubmit").disabled=true;
+   }
+   else
+   {
+   document.getElementById("Mysubmit").disabled=false;
+   }
+   }
+  
+  style(type='text/css').
+   .center-field { background-color: rgb(20, 40, 52); border-style: solid; border-color:white;
+    border-radius: 15px; position: absolute; margin-top: 5%; margin-left: 10vw; width: 80vw; height: 730px; 
+   }
+   p { margin-left: 25px; color: white; font-size: 17px; }
+   .userdata { margin-left: 25px; width: 30vw; height:50px; text-align: center; border-radius: 10px; font-size:20px; }
+   .fupdate { position: absolute; color: white; top: 6px; left:50vw; }  
+   .update { float: right; margin-right:15px;width: 30vw; height:50px; text-align: center; border-radius: 10px; font-size:20px; }
+   .upload { float: left; }
+   .configs { size : 5 }
+   button { margin-right : 10px } 
+  body(onload="validateInput();")
+    b Status:
+    b= name
+    br
+    b= response_text
+  
+  div(class="center-field")
+   form(method="post", action="/update" , enctype="multipart/form-data")
+    p NAME: 
+    input(type="text", name="name", id="name",autocomplete="off", class="userdata", required)
+    p PCB/PANNEL:
+    input(type="number", name="pcbpn",id="pcbpn", class="userdata", onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57", autocomplete="off",min="1",required)
+    p FIRST BARCODE: 
+    input(type="text", name="sampledata" ,id="fdata", class="userdata",autocomplete="off" ,onchange="popup()", required)
+    p PREFIX:
+    input(type="text", name="prefix", id="prefix", class="userdata" onclick="popup()",onchange="check()",required)
+    p DATA:
+    input(type="number",name="data",id="data", class="userdata",onchange="verify()",min="1",required)
+    p TOTAL PCB:
+    input(type="number", name="pcb_t",id="datalen", class="userdata",onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57",autocomplete="off", min="1",onchange="verify()",required)
+    div(class="fupdate")
+     h2 CONFIG FILE:
+      <input type="file", name="config_file",  autocomplete="off", onchange='openFile(event)', accept="">
+     h2 ERROR FILE:
+      input(type="file", name="error_file" ,id="error_file", autocomplete="off",onchange='openError(event)',accept=".csv")
+    
+
+     a(href="/ftp")
+       button(type="button") DOWNLOAD CONF:
+    input(type="submit", value="update",class="update",id="Mysubmit" )
+
+
+

@@ -1,0 +1,35 @@
+doctype html
+html(lang="en")
+  head
+    title= userpage
+    script(type='text/javascript').
+    style(type='text/css').
+     .select-size  input{
+     display:none;
+     }
+
+     label {
+     display: inline-block;
+     width: 50px;
+     height: 50px;
+     text-align: center;
+     border: 1px solid #ddd;
+     line-height: 50px;
+     cursor: pointer
+     }
+
+     #small:checked ~ label[for="small"],
+     #medium:checked ~ label[for="medium"],
+     #large:checked ~ label[for="large"],
+     #x-large:checked ~ label[for="x-large"],
+     #xx-large:checked ~ label[for="xx-large"] {
+     background: #999;
+     color: #fff;
+     }      
+body
+ div(class="select-size")
+  b= "ABHIBALACHANDRA"
+  each val in 10
+   input(type="checkbox" name="s-size" id="small" checked)
+  
+  

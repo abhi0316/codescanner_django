@@ -1,0 +1,67 @@
+import numpy as np
+import MySQLdb as db
+conn = db.connect(host="localhost" ,port=3306,user='root',passwd='Resnova123!',db='NEST_STATION_1')
+cursor = conn.cursor()
+def init():
+	cursor.execute ("select name , boardid from status_initiate")
+	init_val=cursor.fetchall()
+	for i in init_val
+		name,boardid=i[0],i[1]
+
+	print name,boardid
+	cursor.execute
+"""
+#cursor.execute("select barcodes from barcode_status where barcodes= '%s'" %('barcode_status'))
+tmp = cursor.fetchall()
+farray=[]
+init_array=[]
+for i in tmp:
+	init_array.append(i[0])
+opt_array= init_array
+pansz = 5
+init_array=np.array(init_array)
+opt_array=np.array(opt_array)
+
+def status_Update(value):
+	cursor.execute("truncate status")
+	cursor.execute("insert into status where status = '%s'" %value) 
+
+
+def padendzero():
+	global init_array,pansz
+	if init_array.size%pansz != 0 :
+	
+		for i in range (0,abs(init_array.size%pansz - pansz)):
+			init_array=np.insert(init_array,init_array.size,0)
+	return init_array
+
+
+def search():
+	try:
+		global init_array
+		points= np.argwhere(farray == 'ekaneec003')
+		print farray[points[0][0]]
+
+	except:
+		status_Update("INFO : not found in array")
+	
+def inserror(errorarray):
+	global opt_array,farray
+	global init_array
+	try:
+		for i in range (0,len(errorarray)):
+			pos = int(np.argwhere(init_array == errorarray[i])) + 1 
+			if pos%pansz != 0:
+				for z in range(0,abs(pos%pansz-pansz)):
+					opt_array = np.insert(opt_array,pos,0)
+					init_array=opt_array
+				init_array = padendzero()
+	except:
+		status_Update("INFO :error in file uploaded")
+	farray=np.resize(init_array,(init_array.size/pansz , pansz))
+
+padendzero()
+errorarray=['ekaneec003','ekaneec004']
+inserror(errorarray)
+search()
+"""
