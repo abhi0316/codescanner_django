@@ -18,7 +18,7 @@ pansz=0
 backarray=[]
 
 
-STATUS=['CONNECT SCANNER','PROCESS RUNNING','PROCESS STOPPED','ERROR IN BOARD ID','ERROR IN FILE UPLOADED ,ERROR NOT MATCHING WITH BOARDID','NO VALUE GOT FROM DATABASE CHECK DB AND RESTART THE PROGRAM','ORDER MULTIPLE GOT IS 0']
+STATUS=['ERROR:CONNECT SCANNER','INFO:PROCESS RUNNING','INFO:PROCESS STOPPED','ERROR:ERROR IN BOARD ID','ERROR:ERROR IN FILE UPLOADED ,ERROR NOT MATCHING WITH BOARDID','ERROR:NO VALUE GOT FROM DATABASE CHECK DB AND RESTART THE PROGRAM','ERROR:ORDER MULTIPLE GOT IS 0']
 
 
 def init():               # function for initialization of the process fetching values from user
@@ -186,15 +186,13 @@ def serialpgm():
                 	os.system('rm -rf /tmp/stop')
                 	return
 
-                #read=bar_serial.readline()
-                #if read:
-		#	print read
-		#	search(read)
-			
+                read=bar_serial.readline()
+                if read:
+			print read
+			search(read)
 
 while True:
 	if os.path.isdir('/tmp/start'):
 		print "init from start file"
 		os.system('rm -rf /tmp/start')
 		init()
-	
