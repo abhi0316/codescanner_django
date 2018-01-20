@@ -1,0 +1,9 @@
+[Unit]
+Description=Startingservernode
+After=mysql.service
+[Service]
+ExecStart=/bin/bash /home/nest/nestui/barcode.sh
+
+[Install]
+WantedBy=multi-user.target
+
