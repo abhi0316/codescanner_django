@@ -1,3 +1,12 @@
+'''
+Barcode ui django app view
+
+Once user entered details on ui it is saved to database also a temp directory is created to start the application.status_intiate db 
+is accessed by the sample.py code.
+
+'''
+
+
 import MySQLdb as db
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -19,13 +28,13 @@ conn=db.connect(host='localhost' , port=3306 , user='root',passwd='Resnova123!',
 cursor=conn.cursor()
 form = NameForm()
 
-def databaseCheck(boardid):
+def databaseCheck(boardid): # check nestdatabase for validation of batchid:
 	nestcn=db.connect(host='localhost' , port=3306 , user='root',passwd='Resnova123!', db='NESTDB')
 	cursor_err = nestcn.cursor()
 	cursor_err.execute("select * from BoardsTable where batchid='%s'" %boardid)
 	return cursor_err.fetchall()
 
-def dberrchk(boardid):
+def dberrchk(boardid): # check nestdatabase for validation of error:
 	nestcn=db.connect(host='localhost' , port=3306 , user='root',passwd='Resnova123!', db='NESTDB')
         cursor1 = nestcn.cursor()
         cursor1.execute("select batchid from BoardsTable where boardid='%s'" %boardid)
@@ -38,7 +47,7 @@ def stop():
         f.close()
 
 
-def hello(request):
+def hello(request): # hello function responds to incoming http request from status.urls
 	
 	global update,form,a,running,runningupdate
 	print update
