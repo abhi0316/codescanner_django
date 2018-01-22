@@ -32,19 +32,19 @@ def init():               # function for initialization of the process fetching 
 	init_array=[]
 	farray=[]
 	backarray=[]
-	cursor.execute ("select name , boardid from status_initiate")
+	cursor.execute ("select name , boardid from status_initiate") # user name and batchid entered by user which is saved on a database:
 	init_val=cursor.fetchall()
 	print init_val
 	for i in init_val:
 		user_name,boardid=i[0],i[1]
 	print user_name,boardid
-	cursor.execute("select error from errordb")
+	cursor.execute("select error from errordb") # error file updated is entered into a database
 	error_val = cursor.fetchall()
 	if error_val:
 		for i in error_val:
 			 error_array.append(i[0])
 		error_array=sorted(error_array)
-		cursor.execute ("truncate status_error")
+		cursor.execute ("truncate errordb")
 	cursor.execute ("truncate status_initiate")
 	conn.commit()
 	fetch_nestdb(boardid)	
@@ -85,7 +85,7 @@ def fetch_nestdb(batchid): # function to fetch values from NESTDB
 	print "entering serial code"
 	serialpgm()
 
-def gpioout():
+def gpioout(): # Relay code:
 		print "onrelay loop"
 		GPIO.output(4,True)
                 time.sleep(4)
@@ -94,7 +94,7 @@ def gpioout():
                 
 
 
-def NestDbInsert(boardid):
+def NestDbInsert(boardid): # Output database:
 		global user_name
 		conn_write=db.connect(host="localhost" ,port=3306,user='root',passwd='Resnova123!',db='NESTDB')
 		sqlquery='insert into bayout(name,boardid) values ("%s","%s")' %(user_name,boardid)
@@ -125,7 +125,7 @@ def padendzero():
 	return init_array
 	
 
-def search(read):
+def search(read): # searching for barcode in array:
 	global backarray,pansz
 	try:
 		read =read.strip()
@@ -157,7 +157,7 @@ def search(read):
 		print "could not read"
 		pass
 	
-def inserror(errorarray):
+def inserror(errorarray): # error insertion from database:
 	global opt_array,farray
 	global init_array
 	try:
@@ -172,7 +172,7 @@ def inserror(errorarray):
 		status_Update(STATUS[4])
 	farray=np.resize(init_array,(init_array.size/pansz , pansz))
 
-def serialpgm():
+def serialpgm(): # scanner read function 
 	try :
                 bar_serial=serial.Serial('/dev/ttyACM0',timeout=0)
         except:
