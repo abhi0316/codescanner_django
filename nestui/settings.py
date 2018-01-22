@@ -24,7 +24,7 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = ['169.254.189.225']
+ALLOWED_HOSTS = ['169.254.189.225'] # set ip of the local machine
 
 
 # Application definition
