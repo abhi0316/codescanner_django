@@ -1,3 +1,7 @@
+'''
+Code to read barcode serially .Serially data readed along with other barcodes in the same pannel is fetched from the array wrote to the 
+Database.
+'''
 import numpy as np
 import RPi.GPIO as GPIO
 import time
@@ -44,7 +48,7 @@ def init():               # function for initialization of the process fetching 
 		for i in error_val:
 			 error_array.append(i[0])
 		error_array=sorted(error_array)
-		cursor.execute ("truncate errordb")
+		#cursor.execute ("truncate errordb")
 	cursor.execute ("truncate status_initiate")
 	conn.commit()
 	fetch_nestdb(boardid)	
