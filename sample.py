@@ -154,13 +154,11 @@ def search(read): # searching for barcode in array:
 				else:
 					NestDbInsert(i)
 					backarray.append(i)
-					
-					
-		
+
 	except:
 		print "could not read"
 		pass
-	
+
 def inserror(errorarray): # error insertion from database:
 	global opt_array,farray
 	global init_array
@@ -182,7 +180,6 @@ def serialpgm(): # scanner read function
         except:
 		print "Scanner not connected"
                 status_Update(STATUS[0])
-                
 
         while True:
 		if os.path.isdir('/tmp/stop'):
