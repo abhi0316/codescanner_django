@@ -17,5 +17,6 @@ Update:
 Install:
 	sudo apt install python-django
 	sudo apt install python-MySQLdb
+	sudo apt install python-Serial
 	sudo apt install python-numpy
-	$ (MAKE) Init
+	$(MAKE) Init
